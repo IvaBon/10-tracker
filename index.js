@@ -1,61 +1,54 @@
-const inquirer = require("inquirer");
+const inquirer=require("inquirer");
 // const logo = require("asciiart-logo");
-const table=require("console.table");
+// const table=require("console.table");
 
-// This file leads to a class we've created to contain all our database queries
-const db = require("./db");
+// This file leads to a class we"ve created to contain all our database queries
+// const db = require("./db");
 
 
 // Use this function to display the ascii art logo and to begin the main prompts
-function init() {
-
-
-  
-}
 
 // Here we load the initial prompts with a series of options. The first option is provided for you.
 
-async function loadMainPrompts(){
-  const questions= await inquirer
-    .prompt([
+function loadMainPrompts(){
+   inquirer.prompt([
     {
       type: "list",
       name: "choice",
       message: "What would you like to do?",
-      choices: 
-      [
+      choices: [
         {
             name: "View All Employees",
-            value: "VIEW_EMPLOYEES",
+            value: "VIEW_EMPLOYEES"
         },
         {
-            name:'Add Employee',
-            value:'ADD_EMPLOYEE',
+            name:"Add Employee",
+            value:"ADD_EMPLOYEE"
         },
         {
-            name:'Update Employee Role',
-            value:'UPDATE_EMPLOYEE',
+            name:"Update Employee Role",
+            value:"UPDATE_EMPLOYEE"
         },
         {
-            name:'View All Roles',
-            value:'VIEW_ROLES',
+            name:"View All Roles",
+            value:"VIEW_ROLES"
         },
         {
-            name:'Add Role',
-            value:'ADD_ROLE',
+            name:"Add Role",
+            value:"ADD_ROLE"
         },
         {
-            name:'View All Departments',
-            value:'VIEW_DEPARTMENTS',
+            name:"View All Departments",
+            value:"VIEW_DEPARTMENTS"
         },
         {
-            name:'Add Department',
-            value:'ADD_DEPARTMENT',
+            name:"Add Department",
+            value:"ADD_DEPARTMENT"
         },
         {
-            name:'Quit',
-            value:'QUIT',
-        },
+            name:"Quit",
+            value:"QUIT"
+        }
 
         
       ]
@@ -115,4 +108,6 @@ function viewEmployees() {
 
 // Everything starts here!
 // init();
+
+
 loadMainPrompts();
