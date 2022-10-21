@@ -17,7 +17,7 @@ class DB {
     );
   }
 
-  findAllDepartments(data){
+  findAllDepartments(){
     return this.connection.promise().query(
       "SELECT * FROM employees_db.department;"
     );
@@ -40,7 +40,7 @@ class DB {
 
   makeRole(data){
     return this.connection.promise().query(
-      "INSERT INTO role (title, salary, department_id) VALUES (?,?,?);",data.roleName,data.roleSalary,data.roleChoice)
+      "INSERT INTO role (title, salary, department_id) VALUES (?,?,?);",data.roleName, data.roleSalary, data.roleNum)
     
 
   }
@@ -48,14 +48,6 @@ class DB {
   // Add more class methods below for all the database operations needed.
   // Sometimes you may need to pass an id value into a method so it knows 
   //   how to find the correct record.
-
- 
-
-
-
-  
-
-
 
 
   

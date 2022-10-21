@@ -1,12 +1,12 @@
 const inquirer=require("inquirer");
-const { makeDep, findAllDepartments } = require("./db");
-// const connection = require("./db/connection");
+
+
 // const logo = require("asciiart-logo");
 // const table=require("console.table");
 
 // This file leads to a class we"ve created to contain all our database queries
 const db = require("./db");
-const { load } = require("signal-exit");
+
 
 
 // Use this function to display the ascii art logo and to begin the main prompts
@@ -141,16 +141,15 @@ function addRole(){
         message:'What is the salary of the role',
       },
       {
-        type:'number',
-        name:'roleChoice',
-        message:'Department id',
+        type:'input',
+        name:'roleNum',
+        message:'What is the department id',
       },
-    ]).then((data)=>{
+    ])
+    .then((data)=>{
       db.makeRole(data)
       console.log(`${data.roleName} role created`)
-          
-    }).then(() => loadMainPrompts());      
-     
+    }).then(() => loadMainPrompts());       
 }
 
 function viewDep(){
