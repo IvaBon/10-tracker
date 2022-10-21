@@ -13,16 +13,43 @@ class DB {
   
   findAllEmployees() {
     return this.connection.promise().query(
-      "SELECT * FROM employee;"
+      "SELECT * FROM employee JOIN role ON employee.role_id=role.id JOIN department ON role.department_id=department.id;"
     );
+  }
+
+  findAllDepartments(data){
+    return this.connection.promise().query(
+      "SELECT * FROM employees_db.department;"
+    );
+  }
+
+ 
+
+  findAllRoles(){
+    return this.connection.promise().query(
+      "SELECT * FROM employees_db.role;"
+    );
+  }
+
+  makeDep(data){
+
+    return this.connection.promise().query(
+      "INSERT INTO department (name) VALUES (?);",data.addDepartment)
+      
+  }
+
+  makeRole(data){
+    return this.connection.promise().query(
+      "INSERT INTO role (title, salary, department_id) VALUES (?,?,?);",data.roleName,data.roleSalary,data.roleChoice)
+    
+
   }
 
   // Add more class methods below for all the database operations needed.
   // Sometimes you may need to pass an id value into a method so it knows 
   //   how to find the correct record.
 
-
-
+ 
 
 
 

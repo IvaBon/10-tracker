@@ -1,9 +1,12 @@
 const inquirer=require("inquirer");
+const { makeDep, findAllDepartments } = require("./db");
+// const connection = require("./db/connection");
 // const logo = require("asciiart-logo");
 // const table=require("console.table");
 
 // This file leads to a class we"ve created to contain all our database queries
-// const db = require("./db");
+const db = require("./db");
+const { load } = require("signal-exit");
 
 
 // Use this function to display the ascii art logo and to begin the main prompts
@@ -63,9 +66,26 @@ function loadMainPrompts(){
         viewEmployees();
         break;
       case "ADD_EMPLOYEES":
-
-      
-        // add the other case statements here
+        addEmployee();
+        break;
+      case "UPDATE_EMPLOYEE":
+        updateEmployee();
+        break;
+      case "VIEW_ROLES":
+        viewRoles();
+        break;
+      case "ADD_ROLE":
+        addRole();
+        break;
+      case "VIEW_DEPARTMENTS":
+        viewDep();
+        break;
+      case "ADD_DEPARTMENT":
+        addDep();
+        break;
+      case "QUIT":
+        console.log('end')
+        break;
     }
   }
 )
@@ -90,24 +110,74 @@ function viewEmployees() {
     .then(() => loadMainPrompts());
 }
 
+function addEmployee(){
+
+}
+
+function updateEmployee(){
+
+}
+
+function viewRoles(){
+  db.findAllRoles()
+  .then(([rows]) => {
+    let employees = rows;
+    console.log("\n");
+    console.table(employees);
+  })
+  .then(() => loadMainPrompts());
+}
+
+function addRole(){
+   inquirer.prompt([
+      {
+        type:'input',
+        name:'roleName',
+        message:'What is the name of the role',
+      },
+      {
+        type:'input',
+        name:'roleSalary',
+        message:'What is the salary of the role',
+      },
+      {
+        type:'number',
+        name:'roleChoice',
+        message:'Department id',
+      },
+    ]).then((data)=>{
+      db.makeRole(data)
+      console.log(`${data.roleName} role created`)
+          
+    }).then(() => loadMainPrompts());      
+     
+}
+
+function viewDep(){
+  db.findAllDepartments()
+  .then(([rows]) => {
+    let employees = rows;
+    console.log("\n");
+    console.table(employees);
+  })
+  .then(() => loadMainPrompts());
+}
+
+function addDep(){
+  inquirer.prompt([
+    {
+      type:'input',
+      name:'addDepartment',
+      message:'What is the name of the department'
+    }
+  ]).then((data)=>{
+    db.makeDep(data)
+    console.log(`Added ${data.addDepartment} to the database`)
+  }).then(() => loadMainPrompts());
+}
 
 
 /* ======= END Controllers ============================================================ */
-
-
-
-
-
-/* 
-  You will write lots of other functions here for the other prompt options.
-  Note that some prompts will require you to provide more prompts, and these 
-  may need functions of their own.
-*/
-
-
-
-// Everything starts here!
-// init();
 
 
 loadMainPrompts();
