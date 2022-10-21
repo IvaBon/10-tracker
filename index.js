@@ -1,4 +1,7 @@
 const inquirer=require("inquirer");
+const { async } = require("rxjs");
+const { getRole, connection } = require("./db");
+const mysql=require('mysql2');
 
 
 // const logo = require("asciiart-logo");
@@ -26,7 +29,7 @@ function loadMainPrompts(){
         },
         {
             name:"Add Employee",
-            value:"ADD_EMPLOYEE"
+            value:"ADD_EMPLOYEES"
         },
         {
             name:"Update Employee Role",
@@ -112,9 +115,57 @@ function viewEmployees() {
 
 function addEmployee(){
 
+  inquirer.prompt([
+    {
+      type:'input',
+      name:'first_name',
+      message:"What is the employee's first name",
+    },
+    {
+      type:'input',
+      name:'last_name',
+      message:"What is the employee's last name",
+    },
+    {
+      type:'number',
+      name:'role',
+      message:'What is role id for this employee',
+    },
+    {
+      type:'number',
+      name:'manager_id',
+      message:'What is manager id for employee'
+    }
+  ])
+  .then((resEmp)=>{
+    db.makeEmployee(resEmp)
+    console.log(`${resEmp.first_name} created`)
+  }).then(() => loadMainPrompts());       
+
 }
 
+
 function updateEmployee(){
+  inquirer.prompt([
+    {
+      type:'input',
+      name:'firstName',
+      message:"What is employee's first name"
+    },
+    {
+      type:'input',
+      name:'lastName',
+      message:"What is employee's last name"
+    },
+    {
+      type:'number',
+      name:'role',
+      message:'New role id'
+    }
+  ]).then((rup)=>{
+    db.updateEmployee(rup)
+    console.log(`Updated ${rup.firstName}`)
+  }).then(() => loadMainPrompts());
 
 }
 
@@ -132,23 +183,23 @@ function addRole(){
    inquirer.prompt([
       {
         type:'input',
-        name:'roleName',
+        name:'title',
         message:'What is the name of the role',
       },
       {
-        type:'input',
-        name:'roleSalary',
+        type:'number',
+        name:'salary',
         message:'What is the salary of the role',
       },
       {
-        type:'input',
-        name:'roleNum',
-        message:'What is the department id',
-      },
+        type:'number',
+        name:'department_id',
+        message:'What is the department id'
+      }
     ])
-    .then((data)=>{
-      db.makeRole(data)
-      console.log(`${data.roleName} role created`)
+    .then((res)=>{
+      db.makeRole(res)
+      console.log(`${res.title} role created`)
     }).then(() => loadMainPrompts());       
 }
 
